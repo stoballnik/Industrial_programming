@@ -1,0 +1,23 @@
+version: "3.3"
+
+services:
+    db:
+        image: postgres
+    migration:
+        build: .
+        volumes:
+            - .:/code
+        links:
+            - db
+        depends_on:
+            - db
+        command: bash -c "./wait-for-it.sh db:5432 && python3 manage.py makemigrations && python3 manage.py migrate"
+    web:
+        build: .
+        volumes:
+            - .:/code
+        ports:
+            - "8000:8000"
+        depends_on:
+            - migration
+        command: python3 manage.py runserver 0.0.0.0:8000

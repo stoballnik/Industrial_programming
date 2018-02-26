@@ -1,0 +1,11 @@
+{% include 'partials/header.html' %}
+    <ul>
+      {% for todo in todos %}
+        <input type="checkbox" name="complited" id={{todo.id}} value={{todo.completed}} >
+        <label>{{todo.title}}: {{todo.text}}</label>
+        <br>
+      {% endfor %}
+    </ul>
+<input type="submit" name="deleteComplited" value="Delete complited">
+<input type="submit" name="deleteAll" value="Delete all">
+{% include 'partials/footer.html' %}
